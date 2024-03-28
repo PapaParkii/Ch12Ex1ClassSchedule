@@ -77,7 +77,7 @@ namespace ClassSchedule.Controllers
             var list = classes.List(classOptions);
 
             // return first Class or blank Class if null
-            return list.FirstOrDefault();
+            return classes.Get(classOptions) ?? new Class();
         }
         private void LoadViewBag(string operation)
         {

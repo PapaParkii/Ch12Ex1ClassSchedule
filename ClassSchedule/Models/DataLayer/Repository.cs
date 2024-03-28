@@ -42,6 +42,19 @@ namespace ClassSchedule.Models
         public virtual void Update(T entity) => dbset.Update(entity);
         public virtual void Delete(T entity) => dbset.Remove(entity);
         public virtual void Save() => context.SaveChanges();
+
+        public virtual T Get(QueryOptions<T> options)
+        {
+            IQueryable<T> query = dbset;
+            foreach (string include in options.GetIncludes())
+            {
+                query = query.Include(include);
+            }
+            if (options.HasWhere)
+                query = query.Where(options.Where);
+            
+            return query.FirstOrDefault();
+        }
     }
 
 }
