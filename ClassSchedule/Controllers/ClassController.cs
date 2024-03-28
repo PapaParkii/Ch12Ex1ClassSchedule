@@ -10,12 +10,10 @@ namespace ClassSchedule.Controllers
         private Repository<Teacher> teachers { get; set; }
         private Repository<Day> days { get; set; }
 
-        public ClassController(ClassScheduleContext ctx)
-        {
-            classes = new Repository<Class>(ctx);
-            teachers = new Repository<Teacher>(ctx);
-            days = new Repository<Day>(ctx);
-        }
+        private ClassScheduleUnitOfWork data { get; set; }
+        public ClassController(ClassScheduleContext ctx) => 
+            data = new ClassScheduleUnitOfWork(ctx);
+       
 
         public RedirectToActionResult Index() => RedirectToAction("Index", "Home");
 

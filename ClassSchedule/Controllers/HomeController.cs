@@ -5,13 +5,12 @@ namespace ClassSchedule.Controllers
 {
     public class HomeController : Controller
     {
-        private Repository<Class> classes { get; set; }
-        private Repository<Day> days { get; set; }
 
-        public HomeController(ClassScheduleContext ctx) {
-            classes = new Repository<Class>(ctx);
-            days = new Repository<Day>(ctx);
-        }
+        private ClassScheduleUnitOfWork unitOfWork { get; set; }
+        
+
+        public HomeController(ClassScheduleContext ctx) =>
+            unitOfWork = new ClassScheduleUnitOfWork(ctx);
 
         public ViewResult Index(int id)
         {
@@ -35,8 +34,8 @@ namespace ClassSchedule.Controllers
             }
 
             // execute queries
-            ViewBag.Days = days.List(dayOptions);
-            return View(classes.List(classOptions));
+            ViewBag.Days = unitOfWork.Days;
+            return View(unitOfWork.Days);
         }
     }
 }
