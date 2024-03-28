@@ -7,6 +7,10 @@ namespace ClassSchedule.Models
     {
         public void Configure(EntityTypeBuilder<Class> entity)
         {
+            entity.HasOne(c => c.Teacher)
+                .WithMany(t => t.Classes)
+                .OnDelete(DeleteBehavior.Restrict);
+
             entity.HasData(
                new Class { ClassId = 1, Title = "Sign Language", Number = 101, TeacherId = 1, DayId = 1, MilitaryTime = "1500" },
                new Class { ClassId = 2, Title = "Sign Language", Number = 301, TeacherId = 1, DayId = 2, MilitaryTime = "1100" },
